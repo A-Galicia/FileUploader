@@ -12,7 +12,11 @@ const router = Router();
 // GET ////////////////////////////////////////////////////////////
 
 router.get('/login', (req, res) => {
-  res.send('login');
+  res.render('login');
+});
+
+router.get('/sign-up', (req, res) => {
+  res.render('sign-up');
 });
 
 //_________________________________________________________________

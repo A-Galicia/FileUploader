@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login</title>
+  </head>
+  <body>
+    <h1>Sign Up</h1>
+    <form action="/login" method="post">
+      <section>
+        <label for="username">Username:</label>
+        <input
+          id="username"
+          name="username"
+          type="text"
+          autocomplete="username"
+          required
+          autofocus
+        />
+      </section>
+
+      <section>
+        <label for="password">Password:</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          autocomplete="current-password"
+          required
+        />
+      </section>
+
+      <button type="submit">Login</button>
+    </form>
+
+    <a href="/login">Back to login page</a>
+  </body>
+</html>

@@ -1,16 +1,9 @@
 const db = require('../db/queries');
 const bcrypt = require('bcryptjs');
 
-async function insertUser(req, res, next) {
-  try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    await db.insertUser(req.body.username, hashedPassword);
-    res.redirect('/login');
-  } catch (err) {
-    console.log(err);
-    return next(err);
-  }
-}
+//
+
+// Passport Functions /////////////////////////////////////////////
 
 async function useLocalStrategy(username, password, done) {
   try {
@@ -40,8 +33,59 @@ async function deserializeUser(id, done) {
   }
 }
 
+//_________________________________________________________________
+
+//
+
+// Database Control ///////////////////////////////////////////////
+
+async function insertUser(req, res, next) {
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    await db.insertUser(req.body.username, hashedPassword);
+    res.redirect('/login');
+  } catch (err) {
+    console.log(err);
+    return next(err);
+  }
+}
+
+async function createFolder(req, res) {
+  try {
+    await db.createFolder(req.user.id, req.body.name);
+  } catch (err) {
+    console.log(err);
+  }
+
+  res.redirect('/home');
+}
+
+async function getHome(req, res) {
+  try {
+    const folders = await db.getAllFolders(req.user.id);
+    const files = await db.getAllFiles(req.user.id);
+
+    res.render('home', { folders: folders, files: files });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function getFolder(req, res) {
+  try {
+    const folders = await db.getAllFolders(req.user.id);
+
+    res.render('home', { folders: folders });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 module.exports = {
   insertUser,
   useLocalStrategy,
   deserializeUser,
+  createFolder,
+  getHome,
+  getFolder,
 };

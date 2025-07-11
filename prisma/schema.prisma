@@ -26,12 +26,14 @@ model User {
   name     String   @unique
   password String
   storage  Storage[]
+  files  File[]
 }
 
 model Storage {
   id     String @id @default(uuid())
   user   User   @relation(fields: [userId], references: [id])
   userId String
+  name    String
   files  File[]
 }
 
@@ -39,5 +41,8 @@ model File {
   id        String  @id @default(uuid())
   storage   Storage @relation(fields: [storageId], references: [id])
   storageId String  @unique
+  user   User @relation(fields: [userId], references: [id])
+  userId String  @unique
+  name      String
   data      String
 }

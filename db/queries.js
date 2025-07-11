@@ -10,6 +10,21 @@ async function insertUser(username, password) {
   });
 }
 
+async function createFolder(id, fileName) {
+  const folder = await prisma.user.update({
+    where: {
+      id: id,
+    },
+    data: {
+      storage: {
+        create: {
+          name: fileName,
+        },
+      },
+    },
+  });
+}
+
 async function selectUserByName(username) {
   const user = await prisma.user.findFirst({
     where: {
@@ -30,8 +45,32 @@ async function selectUserById(id) {
   return user;
 }
 
+async function getAllFolders(id) {
+  const folders = await prisma.storage.findMany({
+    where: {
+      userId: id,
+    },
+  });
+
+  return folders;
+}
+
+async function getAllFiles(id) {
+  console.log('in all files');
+  const files = await prisma.file.findMany({
+    where: {
+      userId: id,
+    },
+  });
+  console.log(files);
+  return files;
+}
+
 module.exports = {
   insertUser,
   selectUserByName,
   selectUserById,
+  createFolder,
+  getAllFolders,
+  getAllFiles,
 };

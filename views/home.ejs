@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Files</title>
+  </head>
+  <body>
+    <div>
+      <a href="/logout">logout </a>
+
+      <form action="/upload" method="post">
+        <label for="file">Upload a file</label>
+        <input
+          id="file"
+          name="file"
+          type="file"
+          autocomplete="file"
+          required
+          autofocus
+        />
+
+        <button type="submit">Upload</button>
+      </form>
+
+      <p>Create a new folder</p>
+
+      <form action="/folder" method="post">
+        <label for="file">Name:</label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          autocomplete="name"
+          required
+          autofocus
+        />
+
+        <button type="submit">Create</button>
+      </form>
+
+      <div>
+        <% folders.map((folder) => { %>
+        <div class="folder">
+          <a href="/folder/<%= folder.id %>">
+            <img src="folder.png" height="200px" width="200px" />
+            <p><%= folder.name %></p>
+          </a>
+        </div>
+        <% }) %>
+      </div>
+
+      <div>
+        <% files.map((file) => { %>
+        <div class="file">
+          <img src="file.png" height="150px" width="150px" />
+          <p><%= file.name %></p>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </body>
+</html>

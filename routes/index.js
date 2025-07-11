@@ -2,6 +2,21 @@ const { Router } = require('express');
 const auth = require('../authMiddleware');
 const controller = require('../controller/indexController');
 
+const multer = require('multer');
+
+// Storing the files locally
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './uploads');
+  },
+  filename: (req, file, cb) => {
+    const fileType = file.mimetype.split('/')[1];
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e3);
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({ storage: storage });
+
 //
 
 const router = Router();
@@ -26,5 +41,7 @@ router.get('/folder/:id', auth.isAuth, controller.getFolder);
 // POST ///////////////////////////////////////////////////////////
 
 router.post('/folder', controller.createFolder);
+
+router.post('/upload', upload.single('file'), controller.uploadFile);
 
 module.exports = router;

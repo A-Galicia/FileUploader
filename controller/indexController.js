@@ -1,6 +1,9 @@
 const db = require('../db/queries');
 const bcrypt = require('bcryptjs');
 
+const multer = require('multer');
+const upload = multer();
+
 //
 
 // Passport Functions /////////////////////////////////////////////
@@ -81,6 +84,11 @@ async function getFolder(req, res) {
   }
 }
 
+async function uploadFile(req, res) {
+  console.log(req.file, req.body);
+  res.redirect('/home');
+}
+
 module.exports = {
   insertUser,
   useLocalStrategy,
@@ -88,4 +96,5 @@ module.exports = {
   createFolder,
   getHome,
   getFolder,
+  uploadFile,
 };

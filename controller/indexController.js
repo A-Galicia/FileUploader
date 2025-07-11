@@ -76,9 +76,10 @@ async function getHome(req, res) {
 
 async function getFolder(req, res) {
   try {
-    const folders = await db.getAllFolders(req.user.id);
+    const files = await db.getNestedFiles(req.params.folderId);
+    const folder = await db.getFolderById(req.params.folderId);
 
-    res.render('home', { folders: folders });
+    res.render('folder', { folder: folder, files: files });
   } catch (err) {
     console.log(err);
   }
@@ -86,10 +87,19 @@ async function getFolder(req, res) {
 
 async function uploadFile(req, res) {
   try {
-    console.log(req.file);
     await db.createFile(req.file, req.user.id);
 
     res.redirect('/home');
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function uploadNestedFile(req, res) {
+  try {
+    await db.createNestedFile(req.file, req.params.folderId, req.user.id);
+
+    res.redirect(`/folder/${req.params.folderId}`);
   } catch (err) {
     console.log(err);
   }
@@ -103,4 +113,5 @@ module.exports = {
   getHome,
   getFolder,
   uploadFile,
+  uploadNestedFile,
 };

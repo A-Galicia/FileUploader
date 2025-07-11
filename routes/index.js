@@ -32,7 +32,7 @@ router.get('/', (req, res) => {
 
 router.get('/home', auth.isAuth, controller.getHome);
 
-router.get('/folder/:id', auth.isAuth, controller.getFolder);
+router.get('/folder/:folderId', auth.isAuth, controller.getFolder);
 
 //_________________________________________________________________
 
@@ -43,5 +43,11 @@ router.get('/folder/:id', auth.isAuth, controller.getFolder);
 router.post('/folder', controller.createFolder);
 
 router.post('/upload', upload.single('file'), controller.uploadFile);
+
+router.post(
+  '/nested_upload/:folderId',
+  upload.single('file'),
+  controller.uploadNestedFile
+);
 
 module.exports = router;

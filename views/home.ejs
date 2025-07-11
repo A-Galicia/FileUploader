@@ -53,8 +53,10 @@
       <div>
         <% files.map((file) => { %>
         <div class="file">
-          <img src="file.png" height="150px" width="150px" />
-          <p><%= file.name %>, <%= file.size %>, <%= file.path %></p>
+          <a href="/folder/0/<%= file.id %>">
+            <img src="file.png" height="150px" width="150px" />
+            <p><%= file.name %>, <%= file.size %>, <%= file.path %></p>
+          </a>
         </div>
         <% }) %>
       </div>

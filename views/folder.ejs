@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Files</title>
+  </head>
+  <body>
+    <div>
+      <h1>Folder: <%= folder.name %></h1>
+      <div>
+        <a href="/logout">logout </a>
+        <a href="/home"> Go Back </a>
+      </div>
+
+      <form
+        action="/nested_upload/<%= folder.id%>"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <label for="file">Upload a file</label>
+        <input
+          id="file"
+          name="file"
+          type="file"
+          autocomplete="file"
+          required
+          autofocus
+        />
+
+        <button type="submit">Upload</button>
+      </form>
+
+      <div>
+        <% files.map((file) => { %>
+        <div class="file">
+          <a href="/folder/<%= folder.id%>/<%= file.id %>">
+            <img src="/file.png" height="150px" width="150px" />
+            <p><%= file.name %>, <%= file.size %>, <%= file.path %></p>
+          </a>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </body>
+</html>

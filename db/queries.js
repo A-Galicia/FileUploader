@@ -80,7 +80,48 @@ async function createFile(file, id) {
       },
     },
   });
+}
+
+async function getNestedFiles(id) {
+  const files = await prisma.file.findMany({
+    where: {
+      storageId: id,
+    },
+  });
+
+  console.log(files);
+
+  return files;
+}
+
+async function createNestedFile(file, fileId, userId) {
+  const { filename, path, size } = file;
+  const newfile = await prisma.storage.update({
+    where: {
+      id: fileId,
+      userId: userId,
+    },
+    data: {
+      files: {
+        create: {
+          name: filename,
+          size: size,
+          path: path,
+        },
+      },
+    },
+  });
   console.log(newfile);
+}
+
+async function getFolderById(id) {
+  const folder = await prisma.storage.findFirst({
+    where: {
+      id: id,
+    },
+  });
+
+  return folder;
 }
 
 module.exports = {
@@ -91,4 +132,7 @@ module.exports = {
   getAllFolders,
   getAllFiles,
   createFile,
+  getNestedFiles,
+  createNestedFile,
+  getFolderById,
 };

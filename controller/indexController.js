@@ -85,8 +85,14 @@ async function getFolder(req, res) {
 }
 
 async function uploadFile(req, res) {
-  console.log(req.file, req.body);
-  res.redirect('/home');
+  try {
+    console.log(req.file);
+    await db.createFile(req.file, req.user.id);
+
+    res.redirect('/home');
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 module.exports = {

@@ -54,7 +54,7 @@
         <% files.map((file) => { %>
         <div class="file">
           <img src="file.png" height="150px" width="150px" />
-          <p><%= file.name %></p>
+          <p><%= file.name %>, <%= file.size %>, <%= file.path %></p>
         </div>
         <% }) %>
       </div>

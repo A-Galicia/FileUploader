@@ -56,14 +56,31 @@ async function getAllFolders(id) {
 }
 
 async function getAllFiles(id) {
-  console.log('in all files');
   const files = await prisma.file.findMany({
     where: {
       userId: id,
     },
   });
-  console.log(files);
   return files;
+}
+
+async function createFile(file, id) {
+  const { filename, path, size } = file;
+  const newfile = await prisma.user.update({
+    where: {
+      id: id,
+    },
+    data: {
+      files: {
+        create: {
+          name: filename,
+          size: size,
+          path: path,
+        },
+      },
+    },
+  });
+  console.log(newfile);
 }
 
 module.exports = {
@@ -73,4 +90,5 @@ module.exports = {
   createFolder,
   getAllFolders,
   getAllFiles,
+  createFile,
 };

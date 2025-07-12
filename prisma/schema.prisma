@@ -40,9 +40,9 @@ model Storage {
 model File {
   id        String  @id @default(uuid())
   storage   Storage? @relation(fields: [storageId], references: [id])
-  storageId String?  @unique
+  storageId String?  
   user   User? @relation(fields: [userId], references: [id])
-  userId String?  @unique
+  userId String?  
   name      String
   size      Int
   path      String

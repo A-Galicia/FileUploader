@@ -105,6 +105,27 @@ async function uploadNestedFile(req, res) {
   }
 }
 
+async function deleteFolder(req, res) {
+  try {
+    await db.deleteFolder(req.params.id);
+
+    res.redirect('/home');
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function ShowFile(req, res) {
+  try {
+    const file = await db.getFileById(req.params.fileId);
+    const folder = await db.getFolderById(req.params.folderId);
+
+    res.render('file', { folder: folder, file: file });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 module.exports = {
   insertUser,
   useLocalStrategy,
@@ -114,4 +135,6 @@ module.exports = {
   getFolder,
   uploadFile,
   uploadNestedFile,
+  deleteFolder,
+  ShowFile,
 };

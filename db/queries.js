@@ -89,8 +89,6 @@ async function getNestedFiles(id) {
     },
   });
 
-  console.log(files);
-
   return files;
 }
 
@@ -111,7 +109,6 @@ async function createNestedFile(file, fileId, userId) {
       },
     },
   });
-  console.log(newfile);
 }
 
 async function getFolderById(id) {
@@ -122,6 +119,30 @@ async function getFolderById(id) {
   });
 
   return folder;
+}
+
+async function deleteFolder(id) {
+  await prisma.file.deleteMany({
+    where: {
+      storageId: id,
+    },
+  });
+
+  await prisma.storage.deleteMany({
+    where: {
+      id: id,
+    },
+  });
+}
+
+async function getFileById(id) {
+  const file = await prisma.file.findFirst({
+    where: {
+      id: id,
+    },
+  });
+
+  return file;
 }
 
 module.exports = {
@@ -135,4 +156,6 @@ module.exports = {
   getNestedFiles,
   createNestedFile,
   getFolderById,
+  deleteFolder,
+  getFileById,
 };

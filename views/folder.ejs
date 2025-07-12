@@ -31,6 +31,10 @@
         <button type="submit">Upload</button>
       </form>
 
+      <form action="/delete/folder/<%= folder.id%>" method="post">
+        <button type="submit">Delete This File</button>
+      </form>
+
       <div>
         <% files.map((file) => { %>
         <div class="file">

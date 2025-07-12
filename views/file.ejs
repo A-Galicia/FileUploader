@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Files</title>
+  </head>
+  <body>
+    <div>
+      <% if (folder) { %>
+      <h1>Folder: <%= folder.name %></h1>
+      <% } %>
+
+      <div>
+        <a href="/logout">logout </a>
+        <a href="/home"> Go Back </a>
+      </div>
+
+      <div>
+        <p>File name: <%= file.name %></p>
+        <p>Size: <%= file.size %> bytes</p>
+        <p>Path: <%= file.path %></p>
+      </div>
+
+      <form action="/delete/file/<%= file.id%>" method="post">
+        <button type="submit">Delete This File</button>
+      </form>
+    </div>
+  </body>
+</html>

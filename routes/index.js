@@ -32,6 +32,8 @@ router.get('/', (req, res) => {
 
 router.get('/home', auth.isAuth, controller.getHome);
 
+router.get('/folder/:folderId/:fileId', auth.isAuth, controller.ShowFile);
+
 router.get('/folder/:folderId', auth.isAuth, controller.getFolder);
 
 //_________________________________________________________________
@@ -49,5 +51,7 @@ router.post(
   upload.single('file'),
   controller.uploadNestedFile
 );
+
+router.post('/delete/folder/:id', controller.deleteFolder);
 
 module.exports = router;

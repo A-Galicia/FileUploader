@@ -1,8 +1,21 @@
+require('dotenv').config();
 const db = require('../db/queries');
 const bcrypt = require('bcryptjs');
 
 const multer = require('multer');
 const upload = multer();
+
+const cloudinary = require('cloudinary').v2;
+
+// Cloudinary /////////////////////////////////////////////////////
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_SECRET,
+});
+
+//_________________________________________________________________
 
 //
 
@@ -87,7 +100,19 @@ async function getFolder(req, res) {
 
 async function uploadFile(req, res) {
   try {
-    await db.createFile(req.file, req.user.id);
+    const result = await cloudinary.uploader.upload(
+      req.file.path,
+      {
+        resource_type: 'auto',
+      },
+      (error, result) => {
+        console.log(error);
+      }
+    );
+
+    console.log(result);
+
+    await db.createFile(req.file, req.user.id, result.secure_url);
 
     res.redirect('/home');
   } catch (err) {

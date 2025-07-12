@@ -54,4 +54,6 @@ router.post(
 
 router.post('/delete/folder/:id', controller.deleteFolder);
 
+router.post('/delete/file/:id', controller.deleteFile);
+
 module.exports = router;

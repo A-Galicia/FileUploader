@@ -126,6 +126,16 @@ async function ShowFile(req, res) {
   }
 }
 
+async function deleteFile(req, res) {
+  try {
+    await db.deleteFile(req.params.id);
+
+    res.redirect('/home');
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 module.exports = {
   insertUser,
   useLocalStrategy,
@@ -137,4 +147,5 @@ module.exports = {
   uploadNestedFile,
   deleteFolder,
   ShowFile,
+  deleteFile,
 };

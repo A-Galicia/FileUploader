@@ -47,4 +47,5 @@ model File {
   size      Int
   path      String
   createdAt DateTime @default(now())
+  publicId  String   
 }

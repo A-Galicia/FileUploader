@@ -104,14 +104,18 @@ async function uploadFile(req, res) {
       req.file.path,
       {
         resource_type: 'auto',
-        public_id: req.file.originalname,
       },
       (error, result) => {
         console.log(error);
       }
     );
 
-    await db.createFile(req.file, req.user.id, result.secure_url);
+    await db.createFile(
+      req.file,
+      req.user.id,
+      result.secure_url,
+      result.public_id
+    );
 
     res.redirect('/home');
   } catch (err) {
@@ -136,7 +140,8 @@ async function uploadNestedFile(req, res) {
       req.file,
       req.params.folderId,
       req.user.id,
-      result.secure_url
+      result.secure_url,
+      result.public_id
     );
 
     res.redirect(`/folder/${req.params.folderId}`);
@@ -168,7 +173,18 @@ async function ShowFile(req, res) {
 
 async function deleteFile(req, res) {
   try {
+    const file = await db.getFileById(req.params.id);
+    console.log(file);
     await db.deleteFile(req.params.id);
+
+    const result = cloudinary.uploader.destroy(
+      file.publicId,
+      function (error, result) {
+        if (error) {
+          console.log(error);
+        }
+      }
+    );
 
     res.redirect('/home');
   } catch (err) {

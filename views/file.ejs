@@ -20,6 +20,7 @@
         <p>File name: <%= file.name %></p>
         <p>Size: <%= file.size %> bytes</p>
         <p>Path: <%= file.path %></p>
+        <p>Created: <%= file.createdAt %></p>
       </div>
 
       <form action="/delete/file/<%= file.id%>" method="post">

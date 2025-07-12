@@ -5,16 +5,9 @@ const controller = require('../controller/indexController');
 const multer = require('multer');
 
 // Storing the files locally
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, './uploads');
-  },
-  filename: (req, file, cb) => {
-    const fileType = file.mimetype.split('/')[1];
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e3);
-    cb(null, file.originalname);
-  },
-});
+
+const storage = multer.diskStorage({});
+
 const upload = multer({ storage: storage });
 
 //

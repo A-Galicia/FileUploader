@@ -65,15 +65,16 @@ async function getAllFiles(id) {
 }
 
 async function createFile(file, id) {
-  const { filename, path, size } = file;
-  const newfile = await prisma.user.update({
+  console.log(file);
+  const { originalname, path, size } = file;
+  await prisma.user.update({
     where: {
       id: id,
     },
     data: {
       files: {
         create: {
-          name: filename,
+          name: originalname,
           size: size,
           path: path,
         },
@@ -94,7 +95,7 @@ async function getNestedFiles(id) {
 
 async function createNestedFile(file, fileId, userId) {
   const { filename, path, size } = file;
-  const newfile = await prisma.storage.update({
+  await prisma.storage.update({
     where: {
       id: fileId,
       userId: userId,

@@ -104,13 +104,12 @@ async function uploadFile(req, res) {
       req.file.path,
       {
         resource_type: 'auto',
+        public_id: req.file.originalname,
       },
       (error, result) => {
         console.log(error);
       }
     );
-
-    console.log(result);
 
     await db.createFile(req.file, req.user.id, result.secure_url);
 
@@ -122,7 +121,23 @@ async function uploadFile(req, res) {
 
 async function uploadNestedFile(req, res) {
   try {
-    await db.createNestedFile(req.file, req.params.folderId, req.user.id);
+    const result = await cloudinary.uploader.upload(
+      req.file.path,
+      {
+        resource_type: 'auto',
+        public_id: req.file.originalname,
+      },
+      (error, result) => {
+        console.log(error);
+      }
+    );
+
+    await db.createNestedFile(
+      req.file,
+      req.params.folderId,
+      req.user.id,
+      result.secure_url
+    );
 
     res.redirect(`/folder/${req.params.folderId}`);
   } catch (err) {

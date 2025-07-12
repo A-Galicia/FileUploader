@@ -92,8 +92,8 @@ async function getNestedFiles(id) {
   return files;
 }
 
-async function createNestedFile(file, fileId, userId) {
-  const { originalname, path, size } = file;
+async function createNestedFile(file, fileId, userId, url) {
+  const { originalname, size } = file;
   await prisma.storage.update({
     where: {
       id: fileId,
@@ -104,7 +104,7 @@ async function createNestedFile(file, fileId, userId) {
         create: {
           name: originalname,
           size: size,
-          path: path,
+          path: url,
         },
       },
     },

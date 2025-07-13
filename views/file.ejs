@@ -23,6 +23,13 @@
         <p>Created: <%= file.createdAt %></p>
       </div>
 
+      <% if (!folder) { %> <% folderId = 0 %> <% } else {folderId = folder.id}
+      %>
+
+      <form action="/download/<%= folderId %>/<%= file.id%>" method="post">
+        <button type="submit">Download</button>
+      </form>
+
       <form action="/delete/file/<%= file.id%>" method="post">
         <button type="submit">Delete This File</button>
       </form>

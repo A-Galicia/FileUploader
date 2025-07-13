@@ -1,6 +1,8 @@
 require('dotenv').config();
 const db = require('../db/queries');
 const bcrypt = require('bcryptjs');
+const fs = require('node:fs');
+const fetch = require('node-fetch');
 
 const multer = require('multer');
 const upload = multer();
@@ -173,20 +175,36 @@ async function ShowFile(req, res) {
 
 async function deleteFile(req, res) {
   try {
-    const file = await db.getFileById(req.params.id);
-    console.log(file);
+    await db.getFileById(req.params.id);
     await db.deleteFile(req.params.id);
 
-    const result = cloudinary.uploader.destroy(
-      file.publicId,
-      function (error, result) {
-        if (error) {
-          console.log(error);
-        }
+    cloudinary.uploader.destroy(file.publicId, function (error, result) {
+      if (error) {
+        console.log(error);
       }
-    );
+    });
 
     res.redirect('/home');
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function downloadFile(req, res) {
+  try {
+    const folderId = req.params.folderId;
+    const fileId = req.params.fileId;
+
+    const file = await db.getFileById(fileId);
+    filepath = `./uploads/${file.name}`;
+    await fetch(file.path).then((res) => {
+      res.body.pipe(fs.createWriteStream(filepath));
+    });
+
+    // Waits for fetch to enter file into ./uploads before sending to client
+    await setTimeout(() => {
+      res.download(filepath);
+    }, 1);
   } catch (err) {
     console.log(err);
   }
@@ -204,4 +222,5 @@ module.exports = {
   deleteFolder,
   ShowFile,
   deleteFile,
+  downloadFile,
 };

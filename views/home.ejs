@@ -3,59 +3,68 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/home.css" />
     <title>Files</title>
   </head>
   <body>
     <div>
-      <a href="/logout">logout </a>
+      <div class="header">
+        <div class="logout">
+          <a href="/logout">logout </a>
+        </div>
 
-      <form action="/upload" method="post" enctype="multipart/form-data">
-        <label for="file">Upload a file</label>
-        <input
-          id="file"
-          name="file"
-          type="file"
-          autocomplete="file"
-          required
-          autofocus
-        />
+        <form
+          class="inputForm"
+          action="/upload"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <label for="file">Upload a file</label>
+          <input
+            id="file"
+            name="file"
+            type="file"
+            autocomplete="file"
+            required
+            autofocus
+          />
 
-        <button type="submit">Upload</button>
-      </form>
+          <button type="submit">Upload</button>
+        </form>
 
-      <p>Create a new folder</p>
+        <form class="inputForm" action="/folder" method="post">
+          <p>Create a new folder</p>
+          <label for="file">Name:</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            autocomplete="name"
+            required
+            autofocus
+          />
 
-      <form action="/folder" method="post">
-        <label for="file">Name:</label>
-        <input
-          id="name"
-          name="name"
-          type="text"
-          autocomplete="name"
-          required
-          autofocus
-        />
+          <button type="submit">Create</button>
+        </form>
+      </div>
 
-        <button type="submit">Create</button>
-      </form>
-
-      <div>
+      <div class="folderDisplay">
         <% folders.map((folder) => { %>
         <div class="folder">
-          <a href="/folder/<%= folder.id %>">
+          <a class="folderAnchor" href="/folder/<%= folder.id %>">
             <img src="folder.png" height="200px" width="200px" />
-            <p><%= folder.name %></p>
+            <p class="folderName"><%= folder.name %></p>
           </a>
         </div>
         <% }) %>
       </div>
 
-      <div>
+      <div class="fileDisplay">
         <% files.map((file) => { %>
         <div class="file">
-          <a href="/folder/0/<%= file.id %>">
+          <a class="fileAnchor" href="/folder/0/<%= file.id %>">
             <img src="file.png" height="150px" width="150px" />
-            <p><%= file.name %></p>
+            <p class="fileName"><%= file.name %></p>
           </a>
         </div>
         <% }) %>

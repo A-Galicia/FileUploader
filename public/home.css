@@ -1,0 +1,60 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.logout {
+  width: fit-content;
+  height: fit-content;
+  border: 5px solid orangered;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: chocolate;
+  margin: 5px;
+}
+
+a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+}
+
+.folder,
+.file {
+  display: flex;
+}
+
+.folderDisplay,
+.fileDisplay {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+p {
+  margin-top: 1px;
+}
+
+.folderName {
+  position: relative;
+  bottom: 100px;
+}
+
+.inputForm {
+  border: 5px solid orangered;
+  padding: 5px;
+  width: fit-content;
+  border-radius: 20px;
+  margin: 10px;
+}
+
+button {
+  border: 3px solid black;
+  border-radius: 10px;
+}
+
+input:hover {
+  background-color: aqua;
+}

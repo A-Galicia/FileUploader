@@ -3,36 +3,44 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/home.css" />
     <title>Files</title>
   </head>
   <body>
     <div>
       <h1>Folder: <%= folder.name %></h1>
-      <div>
-        <a href="/logout">logout </a>
-        <a href="/home"> Go Back </a>
+
+      <div class="header">
+        <div class="logout">
+          <a href="/logout">logout </a>
+        </div>
+
+        <div class="logout">
+          <a href="/home"> Go Back </a>
+        </div>
+
+        <form
+          class="inputForm"
+          action="/nested_upload/<%= folder.id%>"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <label for="file">Upload a file</label>
+          <input
+            id="file"
+            name="file"
+            type="file"
+            autocomplete="file"
+            required
+            autofocus
+          />
+
+          <button type="submit">Upload</button>
+        </form>
       </div>
 
-      <form
-        action="/nested_upload/<%= folder.id%>"
-        method="post"
-        enctype="multipart/form-data"
-      >
-        <label for="file">Upload a file</label>
-        <input
-          id="file"
-          name="file"
-          type="file"
-          autocomplete="file"
-          required
-          autofocus
-        />
-
-        <button type="submit">Upload</button>
-      </form>
-
       <form action="/delete/folder/<%= folder.id%>" method="post">
-        <button type="submit">Delete This File</button>
+        <button type="submit">Delete This Folder</button>
       </form>
 
       <div>

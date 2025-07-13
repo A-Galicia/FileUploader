@@ -175,7 +175,7 @@ async function ShowFile(req, res) {
 
 async function deleteFile(req, res) {
   try {
-    await db.getFileById(req.params.id);
+    const file = await db.getFileById(req.params.id);
     await db.deleteFile(req.params.id);
 
     cloudinary.uploader.destroy(file.publicId, function (error, result) {

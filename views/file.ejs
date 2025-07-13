@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/home.css" />
     <title>Files</title>
   </head>
   <body>
@@ -11,9 +12,13 @@
       <h1>Folder: <%= folder.name %></h1>
       <% } %>
 
-      <div>
-        <a href="/logout">logout </a>
-        <a href="/home"> Go Back </a>
+      <div class="header">
+        <div class="logout">
+          <a href="/logout">logout </a>
+        </div>
+        <div class="logout">
+          <a href="/home"> Go Back </a>
+        </div>
       </div>
 
       <div>
